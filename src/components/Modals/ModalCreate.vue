@@ -80,11 +80,7 @@ export default {
   name: "ModalCreate",
   props: ["modal"],
   beforeCreate() {
-    console.log("beforeCreate");
     this.form = this.$form.createForm(this);
-  },
-  created: function() {
-    console.log("created");
   },
   data() {
     return {
@@ -118,9 +114,9 @@ export default {
       e.preventDefault();
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
-          console.log("Received values of form: ", values);
-          this.$message.success("Данные успешно сохранены!");
-          this.$router.push({ name: "Card" });
+          console.log('Received values of form: ', values);
+          this.$message.success('Данные успешно сохранены!');
+          this.$router.push({ name: 'Card' });
           this.formData = {};
           this.form.resetFields();
           this.visible = false;
@@ -160,17 +156,15 @@ export default {
       form["values"] = obj["metaAttributes"];
       //console.log("object", form);
       this.fields = form.values;
-      let data = obj.elements[0].values.map(el => {
-        if (typeof el.valueAttr === "object" && el.valueAttr !== null) {
+      let data = obj.elements[0].values.map( (el) => {
+        if (typeof el.valueAttr === 'object' && el.valueAttr !== null) {
           const url = el.valueAttr.dict;
           // console.log("url", url);
           if (url) {
-            let th = this;
-            axios
+           
+          axios
               .get(`http://cdp-dev.ursip.ru/mdm/api/v1/nsi/dict/${url.nick}`)
-              .then(res => {
-                th.formData[url.nick] = res.data.dict;
-              });
+              .then((res) => this.formData[url.nick] = res.data.dict);
           }
         }
       });
@@ -179,13 +173,13 @@ export default {
       e.preventDefault();
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
-          console.log("Received values of form: ", values);
-          this.$message.success("Данные успешно сохранены!");
-          this.$router.push({ name: "Layout" });
+          console.log('Received values of form: ', values);
+          this.$message.success('Данные успешно сохранены!');
+          this.$router.push({ name: 'Layout' });
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
