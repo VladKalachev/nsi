@@ -208,20 +208,16 @@ export default {
         }
       },
       url: {
-        dict: "http://localhost:3000/dict?nick="
+        dict: 'http://localhost:3000/dict?nick='
       }
     };
   },
   created() {
     console.log(this.$route.params, this.name);
-    let th = this;
     this.page = this.$route.params.name;
-    axios.get(this.url.dict + this.page).then(res => {
-      console.log(res.data);
-      this.field = res.data[0] ? res.data[0]: {};
+    axios.get(this.url.dict + this.page).then((res) => {
+      this.field = res.data[0] ? res.data[0] : {};
       this.table = res.data[0] ? res.data[0].nsiMetaAttrs : [];
-
-      console.log(111, this.table);
       this.loading = true;
     });
   },
@@ -233,18 +229,15 @@ export default {
       e.preventDefault();
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
-          console.log("Received values of form: ", values);
-          this.$message.success("Данные успешно сохранены!");
-          this.$router.push({ name: "Layout" });
+          console.log('Received values of form: ', values);
+          this.$message.success('Данные успешно сохранены!');
+          this.$router.push({ name: 'Layout' });
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
-
-
-
 
 <style>
 .table thead {

@@ -18,13 +18,15 @@
           @click="()=> collapsed = !collapsed"
         />
       </a-layout-header>
-      <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff' }">Main</a-layout-content>
+      <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff' }">
+        Main
+      </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 <script>
 export default {
-  name: "Layout",
+  name: 'Layout',
   data() {
     return {
       collapsed: false

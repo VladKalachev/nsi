@@ -15,10 +15,14 @@
             <a-form-item
               v-bind="formItemLayout"
               v-bind:label="`${value.name} '${value.nick}'`"
-              v-if="value.nick != 'disabled' && value.nick != 'virtual' && value.nick != 'docType' && value.nick != 'system' && value.nick != 'subsystem' && value.nick != 'group'"
+              v-if="value.nick != 'disabled' && value.nick != 'virtual'
+              && value.nick != 'docType' &&
+              value.nick != 'system' && value.nick != 'subsystem' && value.nick != 'group'"
             >
               <a-textarea
-                v-decorator="[value.nick, { rules: [{ required: value.required, message: `Поле ${value.nick} обязательное для ввода` }] }]"
+                v-decorator="[value.nick, { rules: [{ required: value.required,
+                message: `Поле ${value.nick} обязательное для ввода` }]
+                 }]"
                 :placeholder="`${value.name} '${value.nick}'`"
                 autosize
               />
@@ -32,12 +36,18 @@
             >
               <select
                 class="ant-select ant-select-enabled ant-select-selection ant-select-selection--single select-mod"
-                v-decorator="[value.nick, { rules: [{ required: value.required, message: `Поле ${value.nick} обязательное для ввода` }], initialValue: '' }]"
+                v-decorator="[value.nick,
+                { rules: [
+                { required: value.required,
+                  message: `Поле ${value.nick} обязательное для ввода` 
+                }
+                ], initialValue: '' }]"
               >
                 <option
-                  class="ant-select-selection__rendered"
-                  v-for="(value, key) in getDirectory(formData[value.nickDictLink] ? formData[value.nickDictLink] : null)"
-                  v-bind:key="key"
+                  class='ant-select-selection__rendered'
+                  v-for='(value, key) in getDirectory(
+                    formData[value.nickDictLink] ? formData[value.nickDictLink] : null)'
+                  v-bind:key='key'
                   v-bind:value="value"
                 >{{value}}</option>
               </select>
@@ -49,7 +59,7 @@
               v-bind="formItemLayout"
               v-bind:label="`${value.name} '${value.nick}'`"
             >
-              <a-radio-group name="radioGroup" v-decorator="[value.nick, {initialValue: ''}]">
+              <a-radio-group name='radioGroup' v-decorator="[value.nick, {initialValue: ''}]">
                 <a-radio :value="true">Да</a-radio>
                 <a-radio :value="false">Нет</a-radio>
                 <a-radio :value="''">Отсутствует</a-radio>
@@ -68,17 +78,20 @@
         </a-row>
       </a-form>
       <template slot="footer">
-        <a-button key="submit" type="primary" :loading="loading" @click="handleOk">Сохранить</a-button>
+        <a-button key="submit" type="primary" :loading="loading" @click="handleOk">
+          Сохранить
+        </a-button>
         <a-button key="back" @click="handleCancel">Отмена</a-button>
       </template>
     </a-modal>
   </div>
 </template>
 <script>
-import axios from "axios";
+import axios from 'axios';
+
 export default {
-  name: "ModalCreate",
-  props: ["modal"],
+  name: 'ModalCreate',
+  props: ['modal'],
   beforeCreate() {
     this.form = this.$form.createForm(this);
   },
@@ -90,24 +103,23 @@ export default {
       formItemLayout: {
         labelCol: {
           xs: { span: 26 },
-          sm: { span: 10 }
+          sm: { span: 10 },
         },
         wrapperCol: {
           xs: { span: 24 },
-          sm: { span: 13 }
+          sm: { span: 13 },
         }
       },
-      formData: {}
+      formData: {},
     };
   },
   mounted() {},
   methods: {
     showModal() {
-      let th = this;
       this.formData = {};
       this.getFields(this.modal);
       setTimeout(() => {
-        th.visible = true;
+        this.visible = true;
       }, 500);
     },
     handleOk(e) {
@@ -123,37 +135,35 @@ export default {
         }
       });
     },
-    handleCancel(e) {
+    handleCancel() {
       this.form.resetFields();
       this.visible = false;
     },
     getDirectory(arr) {
-      let obj = { ...arr };
+      const obj = { ...arr };
       return obj.elements
         ? obj.elements.map(item =>
             item.values
               .map(el => {
-                let valueA;
-                let valueB;
-                if (el.nick == "code") {
-                  return el.valueAttr;
-                } else if (el.nick == "name") {
-                  return el.valueAttr;
-                }
+              if (el.nick === 'code') {
+                return el.valueAttr;
+              } else if (el.nick === 'name'){
+                return el.valueAttr;
+              }
               })
               .filter(Boolean)
-              .join(" ")
+              .join(' ')
           )
         : [];
     },
     getFields(obj) {
-      console.log("getFields", obj);
+      // console.log('getFields', obj);
       let form = {};
-      form["deleted"] = obj["deleted"];
-      form["dictNick"] = obj["nick"];
-      form["tree"] = false;
-      form["element"] = obj["elements"];
-      form["values"] = obj["metaAttributes"];
+      form['deleted'] = obj['deleted'];
+      form['dictNick'] = obj['nick'];
+      form['tree'] = false;
+      form['element'] = obj['elements'];
+      form['values'] = obj['metaAttributes'];
       //console.log("object", form);
       this.fields = form.values;
       let data = obj.elements[0].values.map( (el) => {
@@ -161,7 +171,6 @@ export default {
           const url = el.valueAttr.dict;
           // console.log("url", url);
           if (url) {
-           
           axios
               .get(`http://cdp-dev.ursip.ru/mdm/api/v1/nsi/dict/${url.nick}`)
               .then((res) => this.formData[url.nick] = res.data.dict);

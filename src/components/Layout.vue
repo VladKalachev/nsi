@@ -21,12 +21,11 @@
   </a-layout>
 </template>
 <script>
-import Vue from "vue";
-import System from "./System";
-import Menu from "./Menu";
+import System from './System';
+import Menu from './Menu';
 
 export default {
-  name: "Layout",
+  name: 'Layout',
   components: {
     System,
     Menu
@@ -35,18 +34,11 @@ export default {
     return {
       collapsed: false
     };
-  }
+  },
 };
 
-// Vue.component("button-counter", {
-//   data: function() {
-//     return {
-//       count: 0
-//     };
-//   },
-//   template: "<div><System/>Content</div>"
-// });
 </script>
+
 <style>
 #components-layout-demo-custom-trigger .trigger {
   font-size: 18px;

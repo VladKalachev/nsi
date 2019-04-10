@@ -20,28 +20,28 @@
           <h3 class="font-bold">Страница не найдена</h3>
           <div
             class="error-desc"
-          >Страница, которую Вы ищете, не может быть найдена. Возможно, Вы допустили опечатку при вводе адреса.</div>
+          >Страница, которую Вы ищете, не может быть найдена.
+          Возможно, Вы допустили опечатку при вводе адреса.</div>
         </div>
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 <script>
-import Vue from "vue";
-import System from "./System";
-import Menu from "./Menu";
+import System from './System';
+import Menu from './Menu';
 
 export default {
-  name: "PageNotFound",
+  name: 'PageNotFound',
   components: {
     System,
-    Menu
+    Menu,
   },
   data() {
     return {
-      collapsed: false
+      collapsed: false,
     };
-  }
+  },
 };
 </script>
 <style>

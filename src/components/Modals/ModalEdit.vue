@@ -24,7 +24,12 @@
               v-bind:label="`${value.name} '${value.nick}'`"
             >
               <a-textarea
-                v-decorator="[value.nick, { rules: [{ required: value.required, message: `Поле ${value.nick} обязательное для ввода` }], initialValue: field[value.nick] }]"
+                v-decorator="[value.nick,
+                { rules:[
+                { required: value.required,
+                message: `Поле ${value.nick} обязательное для ввода` }],
+                initialValue: field[value.nick]
+                }]"
                 :placeholder="`${value.name} '${value.nick}'`"
                 autosize
               />
@@ -38,7 +43,14 @@
             >
               <a-radio-group
                 name="radioGroup"
-                v-decorator="[value.nick, { rules: [{ required: value.required, message: `Поле ${value.nick} обязательное для ввода` }], initialValue: field[value.nick] == true ? field[value.nick] : field[value.nick] == '' ? field[value.nick] : '' }]"
+                v-decorator="[value.nick,
+                { rules: [
+                { required: value.required,
+                message: `Поле ${value.nick} обязательное для ввода` }],
+                initialValue: field[value.nick] == true
+                ? field[value.nick]
+                : field[value.nick] == ''
+                ? field[value.nick] : '' }]"
               >
                 <a-radio :value="true">Да</a-radio>
                 <a-radio :value="false">Нет</a-radio>
@@ -53,8 +65,10 @@
               v-bind:label="`${value.name} '${value.nick}'`"
             >
               <select
-                class="ant-select ant-select-enabled ant-select-selection ant-select-selection--single select-mod"
-                v-decorator="[value.nick, { rules: [{ required: value.required, message: `Поле ${value.nick} обязательное для ввода` }], initialValue: field[value.nick] ? getDirectory(field[value.nick].dict)[0] : null }]"
+                class="ant-select ant-select-enabled 
+                ant-select-selection ant-select-selection--single select-mod"
+                v-decorator="[value.nick, { rules: 
+                [{ required: value.required, message: `Поле ${value.nick} обязательное для ввода` }], initialValue: field[value.nick] ? getDirectory(field[value.nick].dict)[0] : null }]"
               >
                 <option
                   class="ant-select-selection__rendered"
@@ -235,13 +249,10 @@ export default {
           // console.log("url", data[key]);
           if (url) {
             //  console.log("11", data[key].dict.nick);
-            let th = this;
             axios
               .get(`http://cdp-dev.ursip.ru/mdm/api/v1/nsi/dict/${url.nick}`)
-              .then(res => {
-                //console.log(url.nick, res.data.dict);
-                th.formData[url.nick] = res.data.dict;
-                // console.log(111111111, th.formData);
+              .then((res) => {
+                this.formData[url.nick] = res.data.dict;
               });
           }
         }
@@ -251,13 +262,13 @@ export default {
       e.preventDefault();
       this.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
-          console.log("Received values of form: ", values);
-          this.$message.success("Данные успешно сохранены!");
-          this.$router.push({ name: "Layout" });
+          console.log('Received values of form: ', values);
+          this.$message.success('Данные успешно сохранены!');
+          this.$router.push({ name: 'Layout' });
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

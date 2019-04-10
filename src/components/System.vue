@@ -139,13 +139,12 @@
 </template>
 
 <script>
-import reqwest from "reqwest";
-import axios from "axios";
-import { close, closeSync } from "fs";
-import * as R from "ramda";
+import axios from 'axios';
+import { close, closeSync } from 'fs';
+import * as R from 'ramda';
 
 export default {
-  name: "System",
+  name: 'System',
   mounted() {
     this.get();
   },
@@ -157,17 +156,17 @@ export default {
       filterStatys = filterStatys || false;
       const columns = [
         {
-          title: "Код",
-          dataIndex: "nick",
+          title: 'Код',
+          dataIndex: 'nick',
           sorter: true,
-          width: "20%",
+          width: '20%',
           scopedSlots: {
-            filterDropdown: "filterDropdown",
-            filterIcon: "filterIcon",
-            customRender: "customRender"
+            filterDropdown: 'filterDropdown',
+            filterIcon: 'filterIcon',
+            customRender: 'customRender',
           },
           sorter: (a, b) => a.nick.length - b.nick.length,
-          sortOrder: sortedInfo.columnKey === "nick" && sortedInfo.order,
+          sortOrder: sortedInfo.columnKey === 'nick' && sortedInfo.order,
           onFilter: (value, record) =>
             record.nick.toLowerCase().includes(value.toLowerCase()),
           onFilterDropdownVisibleChange: visible => {
@@ -179,19 +178,19 @@ export default {
           }
         },
         {
-          title: "Наименование",
-          dataIndex: "name",
+          title: 'Наименование',
+          dataIndex: 'name',
           sorter: true,
-          width: "20%",
+          width: '20%',
           scopedSlots: {
-            filterDropdown: "filterDropdown",
-            filterIcon: "filterIcon",
-            customRender: "nameData"
+            filterDropdown: 'filterDropdown',
+            filterIcon: 'filterIcon',
+            customRender: 'nameData',
           },
           onFilter: (value, record) =>
             record.name.toLowerCase().includes(value.toLowerCase()),
           sorter: (a, b) => a.name.length - b.name.length,
-          sortOrder: sortedInfo.columnKey === "name" && sortedInfo.order,
+          sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
           onFilterDropdownVisibleChange: visible => {
             if (visible) {
               setTimeout(() => {
@@ -201,59 +200,59 @@ export default {
           }
         },
         {
-          title: "Система",
-          dataIndex: "sysName",
+          title: 'Система',
+          dataIndex: 'sysName',
           sorter: true,
-          width: "10%",
+          width: '10%',
           filters: filterStatys || false,
           onFilter: (value, record) => {
             return record.sysName === value;
           }
         },
         {
-          title: "Статус",
+          title: 'Статус',
           sorter: true,
-          dataIndex: "deleted", // 1 удален , 0 используется
+          dataIndex: 'deleted', // 1 удален , 0 используется
           filters: [
-            { text: "Удален", value: "1" },
-            { text: "Используется", value: "0" }
+            { text: 'Удален', value: '1' },
+            { text: 'Используется', value: '0' }
           ],
-          filteredValue: filteredInfo.deleted || ["0"],
+          filteredValue: filteredInfo.deleted || ['0'],
           onFilter: (value, record) => {
             return record.deleted === parseInt(value);
           },
-          scopedSlots: { customRender: "deletedData" },
-          width: "10%"
+          scopedSlots: { customRender: 'deletedData' },
+          width: '10%',
         },
         {
-          title: "Тип",
+          title: 'Тип',
           sorter: true,
-          dataIndex: "hierarchyDict", // 1 Иерархический ,  0 Линейный
+          dataIndex: 'hierarchyDict', // 1 Иерархический ,  0 Линейный
           filters: [
-            { text: "Иерархический", value: "1" },
-            { text: "Линейный", value: "0" }
+            { text: 'Иерархический', value: '1' },
+            { text: 'Линейный', value: '0' }
           ],
           filteredValue: filteredInfo.hierarchyDict || null,
-          onFilter: (value, record) => {
+          onFilter: function(value, record){
             return record.hierarchyDict === parseInt(value);
           },
-          scopedSlots: { customRender: "hierarchyDictData" },
-          width: "10%"
+          scopedSlots: { customRender: 'hierarchyDictData' },
+          width: '10%',
         },
         {
-          title: "Примечание",
-          dataIndex: "note",
-          width: "10%"
+          title: 'Примечание',
+          dataIndex: 'note',
+          width: '10%',
         },
         {
-          title: "",
-          dataIndex: "edit",
-          scopedSlots: { customRender: "editField" },
-          width: "5%"
-        }
+          title: '',
+          dataIndex: 'edit',
+          scopedSlots: { customRender: 'editField' },
+          width: '5%',
+        },
       ];
       return columns;
-    }
+    },
   },
   data() {
     return {
@@ -263,22 +262,22 @@ export default {
       loading: false,
       filteredInfo: null,
       sortedInfo: null,
-      searchText: "",
+      searchText: '',
       searchInput: null,
       dataLength: [],
       url: {
-        dict: "http://localhost:3000/dict"
-      }
+        dict: 'http://localhost:3000/dict',
+      },
     };
   },
   methods: {
     handleTableChange(pagination, filters, sorter) {
-      console.log("Various parameters", pagination, filters, sorter);
+      console.log('Various parameters', pagination, filters, sorter);
       this.filteredInfo = filters;
       this.sortedInfo = sorter;
 
-      console.log("data", this.data);
-      const filterData = this.data.filter(item => {
+      console.log('data', this.data);
+      const filterData = this.data.filter((item) => {
         if (filters.deleted.length) {
           return filters.deleted.includes(String(item.deleted));
         } else {
@@ -288,74 +287,48 @@ export default {
       this.dataLength = filterData;
     },
     handleExpand(expanded, record) {
-      console.log("handleExpand", expanded, record);
+      console.log('handleExpand', expanded, record);
     },
     handleRowsChange(record, index) {
-      console.log("expandedRows", record, index);
+      console.log('expandedRows', record, index);
     },
     get() {
       this.loading = true;
       axios
         .get(this.url.dict)
-        .then(data => {
+        .then((data) => {
           const res = data.data;
-          let arr = [];
+          const arr = [];
           res.map((item, i) => {
             arr.push({ text: item.sysName, value: item.sysName });
-            item["key"] = i;
+            item.key = i
             return item;
           });
-          let outArr = R.uniq(arr);
-          let result = outArr.filter(item => item.text !== null);
+          const outArr = R.uniq(arr);
+          const result = outArr.filter( (item) => item.text !== null);
           const sortByName = R.sortBy(
             R.compose(
               R.toLower,
-              R.prop("nick")
-            )
+              R.prop('nick'),
+            ),
           );
           this.data = sortByName(res);
-          const filterData = this.data.filter(item => {
-            return item.deleted == 0;
-          });
-
+          const filterData = this.data.filter((item) => item.deleted === 0);
           this.dataLength = filterData;
           this.filterStatys = result;
           this.loading = false;
         });
-
-      // axios
-      //   .get("http://develop.ursip.local/api/nsi-ursip/api/v1/nsi/meta/dict/")
-      //   .then(data => {
-      //     console.log("data", data);
-      //     this.data = data.data;
-      //     this.loading = false;
-      //   });
-
-      //http://cdp-dev.ursip.ru/mdm/api/v1/nsi/meta/dict/
-
-      //http://develop.ursip.local/api/nsi-ursip/api/v1/nsi/meta/dict
-
-      // this.$http.get("http://cdp-dev.ursip.ru/mdm/api/v1/nsi/meta/dict/");
-      // http://192.168.4.160:9666
-      // http://cdp-dev.ursip.ru/mdm/api/v1/nsi/meta/dict/
-      // reqwest({
-      //   url: "http://cdp-dev.ursip.ru/mdm/api/v1/nsi/meta/dict/",
-      //   method: "get",
-      //   type: "json"
-      // }).then(data => {
-      //   console.log("data", data);
-      // });
     },
     handleSearch(selectedKeys, confirm) {
-      console.log("handleSearch", selectedKeys, confirm);
+      console.log('handleSearch', selectedKeys, confirm);
       confirm();
       this.searchText = selectedKeys[0];
     },
     handleReset(clearFilters) {
       clearFilters();
-      this.searchText = "";
-    }
-  }
+      this.searchText = '';
+    },
+  },
 };
 </script>
 
