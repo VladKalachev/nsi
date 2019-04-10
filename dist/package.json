@@ -1,0 +1,10 @@
+{
+    "name": "nsi-vuejs-app",
+    "version": "1.0.0",
+    "description": "Heroku App",
+    "author": "kalachev",
+    "private": true,
+    "scripts": {
+      "postinstall": "npm install express"
+    }
+  }
