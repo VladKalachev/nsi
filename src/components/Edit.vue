@@ -183,33 +183,34 @@
 </template>
 
 <script>
-import Menu from "./Menu";
-import axios from "axios";
+import Menu from './Menu';
+import axios from 'axios';
+
 export default {
-  name: "Edit",
+  name: 'Edit',
   components: {
-    Menu
+    Menu,
   },
   data() {
     return {
       field: {},
-      page: "",
+      page: '',
       table: [],
       loading: false,
       collapsed: false,
       formItemLayout: {
         labelCol: {
           xs: { span: 24 },
-          sm: { span: 6 }
+          sm: { span: 6 },
         },
         wrapperCol: {
           xs: { span: 24 },
-          sm: { span: 11 }
-        }
+          sm: { span: 11 },
+        },
       },
       url: {
-        dict: 'http://localhost:3000/dict?nick='
-      }
+        dict: 'http://localhost:3000/dict?nick=',
+      },
     };
   },
   created() {

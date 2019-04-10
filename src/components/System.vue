@@ -305,7 +305,7 @@ export default {
             return item;
           });
           const outArr = R.uniq(arr);
-          const result = outArr.filter( (item) => item.text !== null);
+          const result = outArr.filter((item) => item.text !== null);
           const sortByName = R.sortBy(
             R.compose(
               R.toLower,

@@ -108,7 +108,7 @@ export default {
         wrapperCol: {
           xs: { span: 24 },
           sm: { span: 13 },
-        }
+        },
       },
       formData: {},
     };
@@ -143,13 +143,12 @@ export default {
       const obj = { ...arr };
       return obj.elements
         ? obj.elements.map(item =>
-            item.values
-              .map(el => {
-              if (el.nick === 'code') {
-                return el.valueAttr;
-              } else if (el.nick === 'name'){
-                return el.valueAttr;
-              }
+            item.values.map((el) => {
+            if (el.nick === 'code') {
+              return el.valueAttr;
+            } else if (el.nick === 'name') {
+              return el.valueAttr;
+            }
               })
               .filter(Boolean)
               .join(' ')
@@ -159,11 +158,11 @@ export default {
     getFields(obj) {
       // console.log('getFields', obj);
       let form = {};
-      form['deleted'] = obj['deleted'];
-      form['dictNick'] = obj['nick'];
+      form['deleted'] = obj.deleted;
+      form['dictNick'] = obj.nick;
       form['tree'] = false;
-      form['element'] = obj['elements'];
-      form['values'] = obj['metaAttributes'];
+      form['element'] = obj.elements;
+      form['values'] = obj.metaAttributes;
       //console.log("object", form);
       this.fields = form.values;
       let data = obj.elements[0].values.map( (el) => {
